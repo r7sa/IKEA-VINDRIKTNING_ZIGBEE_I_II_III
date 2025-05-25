@@ -10,8 +10,9 @@ from zigpy.quirks.v2 import (
 )
 from zigpy.quirks.v2.homeassistant.number import NumberDeviceClass
 import zigpy.types as t
+from zigpy.zcl import ClusterType
 from zigpy.zcl.foundation import ZCLAttributeDef
-from zigpy.zcl.clusters.general import Basic, AnalogInput
+from zigpy.zcl.clusters.general import Basic, AnalogInput, OnOff
 from zigpy.zcl.clusters.measurement import (
     PM25,
     CarbonDioxideConcentration,
@@ -74,6 +75,7 @@ class RHMeasurement(RelativeHumidity, CustomCluster):
     .replaces_endpoint(1, device_type=zha.DeviceType.SIMPLE_SENSOR)
     .replaces_endpoint(2, device_type=zha.DeviceType.SIMPLE_SENSOR)
     .replaces(Basic, endpoint_id=1)
+    .replaces(OnOff, endpoint_id=1, cluster_type=ClusterType.Client)
     .replaces(VOCIndex, endpoint_id=1)
     .replaces(PMMeasurement, endpoint_id=1)
     .replaces(CO2Measurement, endpoint_id=1)
@@ -186,18 +188,22 @@ class RHMeasurement(RelativeHumidity, CustomCluster):
     .number(
         TempMeasurement.AttributeDefs.temperature_offset.name,
         TempMeasurement.cluster_id,
+        endpoint_id=2,
         translation_key="temperature_offset",
         fallback_name="Temperature offset",
         unique_id_suffix="temperature_offset",
         min_value=-50,
         max_value=50,
         step=0.1,
+        multiplier=0.1,
         device_class=NumberDeviceClass.TEMPERATURE,
         unit=UnitOfTemperature.CELSIUS,
+        mode="box",
     )
     .number(
         RHMeasurement.AttributeDefs.humidity_offset.name,
         RHMeasurement.cluster_id,
+        endpoint_id=2,
         translation_key="humidity_offset",
         fallback_name="Humidity offset",
         unique_id_suffix="humidity_offset",
@@ -206,6 +212,7 @@ class RHMeasurement(RelativeHumidity, CustomCluster):
         step=1,
         device_class=NumberDeviceClass.HUMIDITY,
         unit=PERCENTAGE,
+        mode="box",
     )
     .sensor(
         VOCIndex.AttributeDefs.present_value.name,
