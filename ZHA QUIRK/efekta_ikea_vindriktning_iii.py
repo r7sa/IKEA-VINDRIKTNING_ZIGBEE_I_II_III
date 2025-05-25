@@ -1,37 +1,3 @@
-# https://github.com/smartboxchannel/IKEA-VINDRIKTNING_ZIGBEE_I_II_III?tab=readme-ov-file
-# https://telegra.ph/Datchik-kachestva-vozduha-EFEKTA-Smart-Air-Quality-Box--Zigbee-30-08-23
-# https://github.com/zigpy/zha-device-handlers/tree/dev
-# https://developer.smartthings.com/docs/edge-device-drivers/zigbee/data_types.html
-
-#  Analog (VOC)
-# [:1:0x000c:85] value: 46.0    #  0x0055/presentValue  voc_index
-# [:1:0x000c]                   #  0x0065  voc_raw_data
-
-#  CO2
-# [:1:0x040d:0]    value: 0.000775999971665442
-# [:1:0x040d:514]  value: 0     # 0x0202  forced_recalibration
-# [:1:0x040d:517]  value: 0     # 0x0205  set_altitude
-# [:1:0x040d:518]  value: 0     # 0x0206  factory_reset_co2
-# [:1:0x040d:1026] value: 1     # 0x0402  automatic_scal
-
-#  PM25
-# [:1:0x042a:0]   value: 66.0   # PM2.5
-# [:1:0x042a:200] value: 3152.0 # 0x00C8  PM1
-# [:1:0x042a:201] value: 254.0  # 0x00C9  PM10
-# [:1:0x042a:513] value: 15     # 0x0201  reading_interval
-# pm_gasstat_config
-# [:1:0x042a: 544 value: 0      # 0x0220  enable_pm25
-# [:1:0x042a: 545 value: 1000   # 0x0221  high_pm25
-# [:1:0x042a: 546 value: 0      # 0x0222  low_pm25
-# [:1:0x042a: 549 value: 0      # 0x0225  invert_logic_pm25
-
-#  Temp
-# [:2:0x0402:0]   value: 2697
-# [:2:0x0402:528] value: 1      # 0x0210   temperature_offset
-
-#  Humidity
-# [:2:0x0405:0]   value: 4588
-# [:2:0x0405:528] value: 1      # 0x0210   humidity_offset
 from typing import Final
 
 from zigpy.profiles import zha
